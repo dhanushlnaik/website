@@ -8,9 +8,10 @@ import {
 } from "@/components/ui/popover";
 import { getCurrentUser } from "@/lib/session";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function AuthButton() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   useEffect(() => {
     async function fetchUser() {
       await getCurrentUser().then((user: any) => {
@@ -26,10 +27,18 @@ export default function AuthButton() {
       ) : (
         <Popover>
           <PopoverTrigger>
-            <Button>You</Button>
+            <Image
+              src={user?.image}
+              alt={user?.name}
+              height={500}
+              width={500}
+              className="w-12 h-12 rounded-full"
+            />
           </PopoverTrigger>
           <PopoverContent>
-            <Button onClick={() => signOut()}>Sign out</Button>
+            <Button onClick={() => signOut()} className="w-full">
+              Sign out
+            </Button>
           </PopoverContent>
         </Popover>
       )}
