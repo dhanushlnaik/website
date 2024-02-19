@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pages/maps/index.jsx", "src/components/maps/Maps.tsx", "src/components/maps/Maps.tsx"],
   "exclude": ["node_modules"]
 }

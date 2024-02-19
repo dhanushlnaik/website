@@ -7,10 +7,15 @@ import styles from "./map.module.css";
 //@ts-ignore
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 
-const Map = () => {
+interface MapProps {
+  lat: number;
+  long: number;
+}
+
+const Map:React.FC<MapProps> = ({lat,long}) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const center = { lng: 13.338414, lat: 52.507932 };
+  const center = { lng: long, lat: lat };
   const [zoom] = useState(12);
 
   useEffect(() => {
