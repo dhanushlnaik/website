@@ -10,16 +10,23 @@ interface LocationData {
 
 const Home: React.FC = () => {
     const [data, setData] = useState<LocationData | null>(null); // Set initial state as null
+    useEffect(()=> {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+    });
+  })
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://api.maptiler.com/geolocation/ip.json?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`);
-                const jsonData = await response.json();
+              navigator.geolocation.getCurrentPosition(function(position) {
                 setData({
-                    latitude: jsonData.latitude,
-                    longitude: jsonData.longitude
-                });
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude
+              });
+              });
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
