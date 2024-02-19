@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -61,11 +61,10 @@ model VerificationToken {
 }
 
 model Post {
-  id                 String    @id @default(cuid())
-  category           String
-  description        String?
-  author             User?     @relation(fields: [authorId], references: [id])
-  authorId           String?
+  id          String  @id @default(cuid())
+  category    Category
+  description String?
+  author      User?   @relation(fields: [userId], references: [id])
   latitude           Float?
   longitude          Float?
   image              String?
@@ -73,8 +72,9 @@ model Post {
   expectedCompletion DateTime?
   expiresAt          DateTime?
   reports            Report[]
-  
-  @@index([authorId])
+  userId             String?
+
+  @@index([id])
 }
 
 model Report {
@@ -83,6 +83,17 @@ model Report {
   postId     String
   reporter   User   @relation(fields: [reporterId], references: [id])
   reporterId String
-   @@index([reporterId])
-  @@index ([postId])
+
+  @@index([reporterId])
+  @@index([postId])
+}
+
+enum Category{
+  MODERATE_TRAFFIC
+  HEAVY_TRAFFIC
+  ACCIDENT
+  ROAD_BLOCK
+  POLICE_CHECK
+  CONSTRUCTION
+  OTHER
 }

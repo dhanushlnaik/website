@@ -28,7 +28,7 @@ export function Navbar() {
       </div>
 
       <div className="w-full sm:hidden flex z-50">
-        <div className="w-full h-[4rem] bg-two-700 flex items-center px-4 fixed top-0">
+        <div className="w-full h-[4rem] bg-white flex items-center px-4 fixed top-0 ">
           <Link href="/">
             <span className="flex items-center gap-x-2">
               <img
@@ -36,13 +36,13 @@ export function Navbar() {
                 alt="flc_Logo"
                 className="md:h-16 h-12"
               />
-              <h3 className="sm:text-2xl text-white text-md font-bold">
+              <h3 className="sm:text-2xl text-black text-md font-bold">
                 Finite Loop Club
               </h3>
             </span>
           </Link>
         </div>
-        <div className="w-full h-[4rem] bg-two-700 fixed bottom-0 flex items-center px-4 justify-between">
+        <div className="w-full h-[4rem] fixed bottom-0 flex items-center px-4 justify-between">
           <Link href="/">
             <Home size="40" color="white" />
           </Link>
