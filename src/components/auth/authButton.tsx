@@ -9,6 +9,7 @@ import {
 import { getCurrentUser } from "@/lib/session";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AuthButton() {
   const [user, setUser] = useState<any>(null);
@@ -35,7 +36,10 @@ export default function AuthButton() {
               className="w-12 h-12 rounded-full"
             />
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent className="flex flex-col gap-y-2">
+            <Link href="/profile">
+              <Button className="w-full">Profile</Button>
+            </Link>
             <Button onClick={() => signOut()} className="w-full">
               Sign out
             </Button>
