@@ -4,10 +4,7 @@ import { Home } from "lucide-react";
 export function Navbar() {
   return (
     <>
-      {/* <div classNameName="flex justify-between px-4 py-2">
-        <AuthButton />
-      </div> */}
-      <div className="sm:flex hidden justify-between fixed w-full py-6 sm:px-8 px-2 h-[6rem] font-semibold bg-black text-white items-center">
+      <div className="sm:flex hidden justify-between rounded-b-lg shadow-xl fixed w-full py-6 border-b-2 sm:px-8 px-2 h-[6rem] font-semibold text-black items-center">
         <a href="/">
           <span className="flex items-center gap-x-2">
             <img

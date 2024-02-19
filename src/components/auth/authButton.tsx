@@ -20,7 +20,7 @@ export default function AuthButton() {
       });
     }
     fetchUser();
-  });
+  }, []);
   return (
     <>
       {!user ? (
