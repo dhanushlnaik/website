@@ -1,6 +1,6 @@
 "use client"
 
-import Map from "@/components/map/Map"
+import Map from "@/components/map/Maps"
 import { useEffect, useState } from "react";
 
 interface LocationData {
@@ -36,9 +36,10 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <>
-            {data && <Map lat={data.latitude} long={data.longitude} />}
-        </>
+      <>
+      {data && <Map lat={data.latitude} long={data.longitude} />}
+      </>
+            
     )
 }
 
