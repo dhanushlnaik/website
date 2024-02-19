@@ -1,5 +1,3 @@
-"use client"
-
 import Map from "@/components/map/Map"
 import { useEffect, useState } from "react";
 
@@ -8,7 +6,7 @@ interface LocationData {
     longitude: number;
 }
 
-const Home: React.FC = () => {
+const MapsMain: React.FC = () => {
     const [data, setData] = useState<LocationData | null>(null); // Set initial state as null
 
     useEffect(() => {
@@ -35,4 +33,4 @@ const Home: React.FC = () => {
     )
 }
 
-export default Home;
+export default MapsMain;
