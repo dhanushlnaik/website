@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useStateStore } from "@/store";
 import { getPosts } from "@/app/_action";
+import { Button } from "../ui/button";
 interface MapProps {
   lat: number;
   long: number;
@@ -15,6 +16,7 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
   const position: [number, number] = [lat, long];
   const { setLatitude, setLongitude } = useStateStore();
   const [postsData, setPostsData] = useState<any[]>([]);
+  const setAddEventOpen = useStateStore((state) => state.setAddEventOpen);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -54,6 +56,20 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
+      {postsData.map((post, index) => {
+        return (
+          <Marker
+            key={index}
+            position={[post.latitude, post.longitude]}
+            icon={customIcon}
+          >
+            <Popup>
+              Category: {post.category}, Description: {post.description}
+            </Popup>
+          </Marker>
+        );
+      })}
       <AddMarkerOnClick />
       {markers.map((marker, index) => (
         <Marker
@@ -62,8 +78,15 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
           icon={customIcon}
         >
           <Popup>
-            Latitude: {marker.lat.toFixed(6)}, Longitude:{" "}
-            {marker.long.toFixed(6)}
+            <span>
+              <Button
+                onClick={() => {
+                  setAddEventOpen();
+                }}
+              >
+                Add New Post
+              </Button>
+            </span>
           </Popup>
         </Marker>
       ))}
