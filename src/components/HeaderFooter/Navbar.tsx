@@ -4,8 +4,8 @@ import { Home } from "lucide-react";
 export function Navbar() {
   return (
     <>
-      <div className="sm:flex hidden justify-between rounded-b-lg shadow-xl fixed w-full py-6 border-b-2 sm:px-8 px-2 h-[6rem] font-semibold text-black items-center">
-        <a href="/">
+      <div className="sm:flex bg-white hidden justify-between rounded-b-lg shadow-xl fixed w-full py-6 border-b-2 sm:px-8 px-2 h-[6rem] font-semibold text-black items-center z-50">
+        <Link href="/">
           <span className="flex items-center gap-x-2">
             <img
               src="/flc_logo_crop.png"
@@ -14,7 +14,7 @@ export function Navbar() {
             />
             <h3 className="sm:text-2xl text-md font-bold">Finite Loop Club</h3>
           </span>
-        </a>
+        </Link>
         <ul className="flex space-x-5 text-xl font-bold">
           {NavItems.map((item, index) => {
             return (
@@ -27,7 +27,7 @@ export function Navbar() {
         <AuthButton />
       </div>
 
-      <div className="w-full sm:hidden flex">
+      <div className="w-full sm:hidden flex z-50">
         <div className="w-full h-[4rem] bg-two-700 flex items-center px-4 fixed top-0">
           <Link href="/">
             <span className="flex items-center gap-x-2">

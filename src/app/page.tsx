@@ -1,5 +1,9 @@
-import Image from "next/image";
+import Map from "@/components/map/Map";
 
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <Map />
+    </div>
+  );
 }
