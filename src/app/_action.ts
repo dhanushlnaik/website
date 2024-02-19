@@ -1,5 +1,8 @@
 "use server";
 import prisma from "../../prisma/client";
+import { getCurrentUser } from "@/lib/session";
+
+const user = getCurrentUser().then((res) => res);
 
 export async function updateProfile(user: any) {
   await prisma.user.update({
@@ -28,4 +31,13 @@ export async function addPost(newPost: any) {
       userId: newPost.userId,
     },
   });
+}
+
+export async function getPosts() {
+  const posts = await prisma.post.findMany({
+    include: {
+      author: true,
+    },
+  });
+  return posts;
 }

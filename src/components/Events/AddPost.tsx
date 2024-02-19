@@ -26,6 +26,7 @@ export default function AddPost() {
   const setAddEventOpen = useStateStore((state) => state.setAddEventOpen);
   const [user, setUser] = useState<any>(null);
   const { toast } = useToast();
+
   const [newPost, setNewPost] = useState<any>({
     category: "MODERATE_TRAFFIC",
     description: "",
@@ -34,13 +35,14 @@ export default function AddPost() {
     image: "",
     expectedCompletion: "",
     expiresAt: "",
-    userId: user?.id,
+    userId: "",
   });
 
   useEffect(() => {
     async function fetchUser() {
       const user = await getCurrentUser();
       setUser(user);
+      setNewPost({ ...newPost, userId: user?.id });
     }
     fetchUser();
   }, []);
@@ -63,11 +65,10 @@ export default function AddPost() {
   async function handleAddPost() {
     try {
       if (
-        !newPost.image ||
-        !newPost.expectedCompletion ||
-        !newPost.description ||
-        !newPost.latitude ||
-        !newPost.longitude
+        newPost.expectedCompletion ||
+        newPost.description ||
+        newPost.latitude ||
+        newPost.longitude
       ) {
         await addPost(newPost);
         toast({
@@ -228,9 +229,7 @@ export default function AddPost() {
                     </Popover>
                   </div>
 
-                  <Button>
-                    <span onClick={handleAddPost}>Add Post</span>
-                  </Button>
+                  <Button onClick={handleAddPost}>Add Post</Button>
                 </div>
               </div>
             </div>

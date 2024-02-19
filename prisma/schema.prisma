@@ -61,10 +61,9 @@ model VerificationToken {
 }
 
 model Post {
-  id          String  @id @default(cuid())
-  category    Category
-  description String?
-  author      User?   @relation(fields: [userId], references: [id])
+  id                 String    @id @default(cuid())
+  category           Category
+  description        String?
   latitude           Float?
   longitude          Float?
   image              String?
@@ -72,7 +71,8 @@ model Post {
   expectedCompletion DateTime?
   expiresAt          DateTime?
   reports            Report[]
-  userId             String?
+  author             User      @relation(fields: [userId], references: [id])
+  userId             String
 
   @@index([id])
 }
@@ -88,7 +88,7 @@ model Report {
   @@index([postId])
 }
 
-enum Category{
+enum Category {
   MODERATE_TRAFFIC
   HEAVY_TRAFFIC
   ACCIDENT

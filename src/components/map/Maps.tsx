@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useStateStore } from "@/store";
+import { getPosts } from "@/app/_action";
 interface MapProps {
   lat: number;
   long: number;
@@ -13,6 +14,15 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
   const [markers, setMarkers] = useState<{ lat: number; long: number }[]>([]);
   const position: [number, number] = [lat, long];
   const { setLatitude, setLongitude } = useStateStore();
+  const [postsData, setPostsData] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const posts = await getPosts();
+      setPostsData(posts);
+    }
+    fetchPosts();
+  });
 
   // Define a custom icon
   const customIcon = new L.Icon({
