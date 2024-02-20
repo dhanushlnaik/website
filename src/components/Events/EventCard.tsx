@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ThumbsDown } from "lucide-react";
+import { reportPost } from "@/app/_action";
 import {
   Card,
   CardContent,
@@ -10,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 interface CardProps {
+  id: string;
   category: string;
   description: string;
   image: string;
@@ -21,6 +24,7 @@ interface CardProps {
 }
 
 const EventCard: React.FC<CardProps> = ({
+  id,
   category,
   description,
   image,
@@ -59,55 +63,67 @@ const EventCard: React.FC<CardProps> = ({
       </CardContent>
 
       <CardFooter>
-        <div className="flex justify-between w-full text-xs text-slate-400">
-          <div className="flex flex-col justify-center items-center">
-            <span className="font-bold text-center">Posted at</span>
-            <span>
-              {createdAt.getDate() < 10
-                ? "0" + createdAt.getDate()
-                : createdAt.getDate()}
-              -
-              {createdAt.getMonth() + 1 < 10
-                ? "0" + (createdAt.getMonth() + 1)
-                : createdAt.getMonth() + 1}
-              -{createdAt.getFullYear()}
-            </span>
-            <span>
-              {createdAt.getHours() < 10
-                ? "0" + createdAt.getHours()
-                : createdAt.getHours()}
-              :
-              {createdAt.getMinutes() < 10
-                ? "0" + createdAt.getMinutes()
-                : createdAt.getMinutes() < 10
-                ? "0" + createdAt.getMinutes()
-                : createdAt.getMinutes()}
-            </span>
+        <div className="flex flex-col w-full gap-y-4">
+          <div className="flex justify-between w-full text-xs text-slate-400">
+            <div className="flex flex-col justify-center items-center">
+              <span className="font-bold text-center">Posted at</span>
+              <span>
+                {createdAt.getDate() < 10
+                  ? "0" + createdAt.getDate()
+                  : createdAt.getDate()}
+                -
+                {createdAt.getMonth() + 1 < 10
+                  ? "0" + (createdAt.getMonth() + 1)
+                  : createdAt.getMonth() + 1}
+                -{createdAt.getFullYear()}
+              </span>
+              <span>
+                {createdAt.getHours() < 10
+                  ? "0" + createdAt.getHours()
+                  : createdAt.getHours()}
+                :
+                {createdAt.getMinutes() < 10
+                  ? "0" + createdAt.getMinutes()
+                  : createdAt.getMinutes() < 10
+                  ? "0" + createdAt.getMinutes()
+                  : createdAt.getMinutes()}
+              </span>
+            </div>
+
+            <div className="flex flex-col justify-center items-center">
+              <span className="font-bold text-center">Ends at</span>
+              <span>
+                {expectedCompletion.getDate() < 10
+                  ? "0" + expectedCompletion.getDate()
+                  : expectedCompletion.getDate()}
+                -
+                {expectedCompletion.getMonth() + 1 < 10
+                  ? "0" + (expectedCompletion.getMonth() + 1)
+                  : expectedCompletion.getMonth() + 1}
+                -{expectedCompletion.getFullYear()}
+              </span>
+
+              <span>
+                {expectedCompletion.getHours() < 10
+                  ? "0" + expectedCompletion.getHours()
+                  : expectedCompletion.getHours()}
+                :
+                {expectedCompletion.getMinutes() < 10
+                  ? "0" + expectedCompletion.getMinutes()
+                  : expectedCompletion.getMinutes() < 10
+                  ? "0" + expectedCompletion.getMinutes()
+                  : expectedCompletion.getMinutes()}
+              </span>
+            </div>
           </div>
-
-          <div className="flex flex-col justify-center items-center">
-            <span className="font-bold text-center">Ends at</span>
-            <span>
-              {expectedCompletion.getDate() < 10
-                ? "0" + expectedCompletion.getDate()
-                : expectedCompletion.getDate()}
-              -
-              {expectedCompletion.getMonth() + 1 < 10
-                ? "0" + (expectedCompletion.getMonth() + 1)
-                : expectedCompletion.getMonth() + 1}
-              -{expectedCompletion.getFullYear()}
-            </span>
-
-            <span>
-              {expectedCompletion.getHours() < 10
-                ? "0" + expectedCompletion.getHours()
-                : expectedCompletion.getHours()}
-              :
-              {expectedCompletion.getMinutes() < 10
-                ? "0" + expectedCompletion.getMinutes()
-                : expectedCompletion.getMinutes() < 10
-                ? "0" + expectedCompletion.getMinutes()
-                : expectedCompletion.getMinutes()}
+          <div className="flex w-full justify-end">
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                reportPost(id, author.id);
+              }}
+            >
+              <ThumbsDown color="red" className="h-4 w-4" />
             </span>
           </div>
         </div>

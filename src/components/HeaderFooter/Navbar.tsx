@@ -27,8 +27,8 @@ export function Navbar() {
         <AuthButton />
       </div>
 
-      <div className="w-full sm:hidden flex z-50">
-        <div className="w-full h-[4rem] bg-white flex items-center px-4 fixed top-0 ">
+      <div className="w-full sm:hidden flex   ">
+        <div className="w-full h-[4rem]  flex items-center bg-white px-4 fixed top-0 z-40 ">
           <Link href="/">
             <span className="flex items-center gap-x-2">
               <img
@@ -42,9 +42,9 @@ export function Navbar() {
             </span>
           </Link>
         </div>
-        <div className="w-full h-[4rem] fixed bottom-0 flex items-center px-4 justify-between">
+        <div className="w-full h-[4rem] bg-white fixed bottom-0 flex items-center px-4 z-40 justify-between">
           <Link href="/">
-            <Home size="40" color="white" />
+            <Home size="40" color="black" />
           </Link>
           <AuthButton />
         </div>
@@ -61,9 +61,5 @@ const NavItems = [
   {
     label: "Feed",
     href: "/feed",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
   },
 ];

@@ -27,7 +27,7 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
       setPostsData(posts);
     }
     fetchPosts();
-  });
+  }, []);
 
   // Define a custom icon
   const customIcon = new L.Icon({
@@ -50,7 +50,7 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
 
   return (
     <MapContainer
-      style={{ width: "100%", height: "100vh", zIndex: 0 }}
+      style={{ width: "100%", height: "100dvh", zIndex: 0 }}
       center={position}
       zoom={15}
       scrollWheelZoom={true}

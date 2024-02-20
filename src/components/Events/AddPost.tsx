@@ -20,12 +20,15 @@ import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { addPost, checkVulgarity } from "@/app/_action";
-
+import { Loader2 } from "lucide-react";
+import { Span } from "next/dist/trace";
 export default function AddPost() {
   const { addEventOpen, longitude, latitude } = useStateStore();
   const setAddEventOpen = useStateStore((state) => state.setAddEventOpen);
   const [user, setUser] = useState<any>(null);
   const { toast } = useToast();
+  const [vulgarity, setVulgarity] = useState(false);
+  const [startCheck, setStartCheck] = useState(false);
 
   const [newPost, setNewPost] = useState<any>({
     category: "MODERATE_TRAFFIC",
@@ -48,12 +51,37 @@ export default function AddPost() {
   }, []);
 
   useEffect(() => {
+    if (startCheck) {
+      checkVulgarity(newPost.description).then((res: any) => {
+        if (res === false) {
+          setVulgarity(false);
+          setStartCheck(false);
+        } else {
+          setVulgarity(true);
+          setStartCheck(false);
+          toast({
+            title: "Vulgarity detected in the description! Please re-write it ",
+          });
+        }
+      });
+    }
+  }, [startCheck]);
+
+  useEffect(() => {
     setNewPost({
       ...newPost,
       latitude: latitude,
       longitude: longitude,
     });
   }, [longitude, latitude]);
+
+  checkVulgarity(newPost.description).then((res: any) => {
+    if (res === false) {
+      setVulgarity(false);
+    } else {
+      setVulgarity(true);
+    }
+  });
 
   const handleUpload = (result: CldUploadWidgetResults) => {
     const info = result.info as object;
@@ -66,6 +94,7 @@ export default function AddPost() {
     try {
       if (
         newPost.expectedCompletion ||
+        newPost.image ||
         newPost.description ||
         newPost.latitude ||
         newPost.longitude
@@ -91,17 +120,21 @@ export default function AddPost() {
     setNewPost((prev: any) => ({ ...prev, expectedCompletion: date }));
   }, [date]);
 
+  useEffect(() => {
+    console.log(vulgarity);
+  }, [vulgarity]);
+
   return (
     <>
       {user && (
         <>
           <span
-            className={`text-white bg-black md:text-2xl sm:text-xl text-lg px-4 py-2 rounded-xl cursor-pointer w-fit flex justify-center items-center space-x-4 z-50`}
+            className={`text-white bg-black md:text-2xl sm:text-xl text-lg md:px-4 md:py-2 p-4 rounded-full cursor-pointer w-fit flex justify-center items-center space-x-4`}
             onClick={() => {
               setAddEventOpen();
             }}
           >
-            <Plus /> Add Post
+            <Plus /> <span className="md:block hidden">Add Post</span>
           </span>
 
           {addEventOpen && (
@@ -145,6 +178,14 @@ export default function AddPost() {
                       setNewPost({ ...newPost, description: e.target.value });
                     }}
                   />
+                  {startCheck && (
+                    <div className="flex justify-center items-center text-xs text-yellow-300 space-x-2">
+                      <span className="animate-spin">
+                        <Loader2 color="yellow" />
+                      </span>{" "}
+                      Checking description for vulgarity
+                    </div>
+                  )}
 
                   <div className="flex flex-col space-y-1 w-full">
                     <span className="flex justify-between w-full gap-4">
@@ -171,7 +212,12 @@ export default function AddPost() {
                     </span>
                   </div>
 
-                  <span className="flex justify-center w-full">
+                  <span
+                    className="flex justify-center w-full"
+                    onClick={() => {
+                      setStartCheck(true);
+                    }}
+                  >
                     <CldUploadButton
                       uploadPreset={
                         process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
@@ -231,7 +277,10 @@ export default function AddPost() {
 
                   <Button
                     onClick={() => {
-                      handleAddPost();
+                      // handleAddPost();
+                      if (!vulgarity && !startCheck) {
+                        handleAddPost();
+                      }
                     }}
                   >
                     Add Post

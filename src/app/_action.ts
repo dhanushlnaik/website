@@ -37,14 +37,14 @@ export async function getPosts() {
   const posts = await prisma.post.findMany({
     include: {
       author: true,
+      reports: true,
     },
   });
   return posts;
 }
 
 export async function checkVulgarity(sentence: string) {
-  let result = "";
-  fetch("http://127.0.0.1:5000/check_vulgarity", {
+  let result = await fetch("http://127.0.0.1:5000/check_vulgarity", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -53,10 +53,19 @@ export async function checkVulgarity(sentence: string) {
   })
     .then((response) => response.json())
     .then((data) => {
-      result = data.result;
-      console.log(result);
+      return data.result;
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+  return result;
+}
+
+export async function reportPost(postId: string, reporterId: string) {
+  await prisma.report.create({
+    data: {
+      postId: postId,
+      reporterId: reporterId,
+    },
+  });
 }

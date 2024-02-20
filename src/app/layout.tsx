@@ -19,11 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className=" min-h-screen">
+        <div className=" min-h-screen ">
           <Navbar />
           {children}
           <Toaster />
-          <div className="sticky bottom-5 w-full justify-end flex pr-5">
+          <div className="sticky bottom-5 w-full md:justify-end justify-center flex pr-5 z-50">
             <AddPost />
           </div>
         </div>
