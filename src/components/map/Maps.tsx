@@ -71,7 +71,7 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
               className="bg-white bg-opacity-75 backdrop-blur-xs shadow-glass p-4 rounded-lg"
               closeButton={true}
             >
-              <div className="max-w-[15rem] h-[25rem] flex flex-col justify-between ">
+              <div className="w-fit h-[25rem] flex flex-col justify-between ">
                 <div className="space-y-4">
                   <div className="flex w-full justify-between items-center">
                     <span className="flex md:flex-row flex-col gap-2 items-center text-xs">

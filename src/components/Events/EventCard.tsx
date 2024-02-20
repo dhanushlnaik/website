@@ -35,7 +35,7 @@ const EventCard: React.FC<CardProps> = ({
   author,
 }) => {
   return (
-    <Card className="max-w-[30rem] h-[30rem] flex flex-col justify-between hover:scale-105 duration-300">
+    <Card className="max-w-[30rem] h-full flex flex-col justify-between hover:scale-105 duration-300">
       <CardHeader className="space-y-4">
         <div className="flex w-full justify-between items-center">
           <span className="flex md:flex-row flex-col gap-2 items-center text-sm">
@@ -55,7 +55,7 @@ const EventCard: React.FC<CardProps> = ({
           alt={category}
           width={500}
           height={200}
-          className="w-full h-full rounded-lg"
+          className="w-full h-2/3 rounded-lg"
         />
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
