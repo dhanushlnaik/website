@@ -1,4 +1,7 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "../ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { ThumbsDown } from "lucide-react";
 import { reportPost } from "@/app/_action";
@@ -34,6 +37,19 @@ const EventCard: React.FC<CardProps> = ({
   reports,
   author,
 }) => {
+  const { toast } = useToast();
+  async function report() {
+    try {
+      await reportPost(id, author.id);
+      toast({
+        title: "Post Reported",
+      });
+    } catch (e) {
+      toast({
+        title: "Something went wrong",
+      });
+    }
+  }
   return (
     <Card className="max-w-[30rem] h-full flex flex-col justify-between hover:scale-105 duration-300">
       <CardHeader className="space-y-4">
@@ -117,12 +133,7 @@ const EventCard: React.FC<CardProps> = ({
             </div>
           </div>
           <div className="flex w-full justify-end">
-            <span
-              className="cursor-pointer"
-              onClick={() => {
-                reportPost(id, author.id);
-              }}
-            >
+            <span className="cursor-pointer" onClick={report}>
               <ThumbsDown color="red" className="h-4 w-4" />
             </span>
           </div>

@@ -10,6 +10,10 @@ export async function getCurrentUser() {
       where: {
         email: session?.user?.email,
       },
+      include: {
+        Report: true,
+        Post: true,
+      },
     });
     return user;
   } catch (error) {

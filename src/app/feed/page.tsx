@@ -5,12 +5,21 @@ import { getPosts } from "../_action";
 import EventCard from "@/components/Events/EventCard";
 const EventPage = () => {
   const [posts, setPosts] = useState<any[]>([]);
+  const [user, setUser] = useState<any>();
   useEffect(() => {
     async function fetchPosts() {
       const posts = await getPosts();
       setPosts(posts);
     }
     fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getCurrentUser();
+      setUser(user);
+    }
+    fetchUser();
   }, []);
 
   return (
@@ -24,6 +33,7 @@ const EventPage = () => {
               post.reports.length > 5
             ) {
               return null;
+            } else if (user?.reports) {
             } else {
               return (
                 <section key={index}>
