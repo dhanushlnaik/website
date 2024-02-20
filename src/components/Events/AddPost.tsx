@@ -51,11 +51,53 @@ export default function AddPost() {
   }, []);
 
   useEffect(() => {
-    if (startCheck) {
-      checkVulgarity(newPost.description).then((res: any) => {
+    setNewPost({
+      ...newPost,
+      latitude: latitude,
+      longitude: longitude,
+    });
+  }, [longitude, latitude]);
+
+  const handleUpload = (result: CldUploadWidgetResults) => {
+    const info = result.info as object;
+    if ("secure_url" in info && "public_id" in info) {
+      setNewPost({ ...newPost, image: info.secure_url });
+    }
+  };
+
+  async function addNewPost() {
+    try {
+      await addPost(newPost);
+      setAddEventOpen();
+      toast({
+        title: "Post added successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to add post",
+      });
+    }
+  }
+
+  async function handleAddPost() {
+    if (
+      !newPost.expectedCompletion ||
+      !newPost.image ||
+      !newPost.description ||
+      !newPost.latitude ||
+      !newPost.longitude
+    ) {
+      toast({
+        title: "Please fill all the fields",
+      });
+      return;
+    } else {
+      setStartCheck(true);
+      await checkVulgarity(newPost.description).then((res: any) => {
         if (res === false) {
           setVulgarity(false);
           setStartCheck(false);
+          addNewPost();
         } else {
           setVulgarity(true);
           setStartCheck(false);
@@ -65,64 +107,12 @@ export default function AddPost() {
         }
       });
     }
-  }, [startCheck]);
-
-  useEffect(() => {
-    setNewPost({
-      ...newPost,
-      latitude: latitude,
-      longitude: longitude,
-    });
-  }, [longitude, latitude]);
-
-  checkVulgarity(newPost.description).then((res: any) => {
-    if (res === false) {
-      setVulgarity(false);
-    } else {
-      setVulgarity(true);
-    }
-  });
-
-  const handleUpload = (result: CldUploadWidgetResults) => {
-    const info = result.info as object;
-    if ("secure_url" in info && "public_id" in info) {
-      setNewPost({ ...newPost, image: info.secure_url });
-    }
-  };
-
-  async function handleAddPost() {
-    try {
-      if (
-        newPost.expectedCompletion ||
-        newPost.image ||
-        newPost.description ||
-        newPost.latitude ||
-        newPost.longitude
-      ) {
-        await addPost(newPost);
-        toast({
-          title: "Post added successfully",
-        });
-        setAddEventOpen();
-      } else {
-        toast({
-          title: "Please fill all the fields",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Failed to add post",
-      });
-    }
   }
+
   const [date, setDate] = useState<Date>();
   useEffect(() => {
     setNewPost((prev: any) => ({ ...prev, expectedCompletion: date }));
   }, [date]);
-
-  useEffect(() => {
-    console.log(vulgarity);
-  }, [vulgarity]);
 
   return (
     <>
@@ -176,6 +166,7 @@ export default function AddPost() {
                     value={newPost?.description}
                     onChange={(e) => {
                       setNewPost({ ...newPost, description: e.target.value });
+                      setStartCheck(false);
                     }}
                   />
                   {startCheck && (
@@ -214,9 +205,7 @@ export default function AddPost() {
 
                   <span
                     className="flex justify-center w-full"
-                    onClick={() => {
-                      setStartCheck(true);
-                    }}
+                    onClick={() => {}}
                   >
                     <CldUploadButton
                       uploadPreset={
