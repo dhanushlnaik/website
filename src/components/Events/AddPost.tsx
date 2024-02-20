@@ -19,7 +19,7 @@ import { Input } from "../ui/input";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
-import { addPost } from "@/app/_action";
+import { addPost, checkVulgarity } from "@/app/_action";
 
 export default function AddPost() {
   const { addEventOpen, longitude, latitude } = useStateStore();
@@ -229,7 +229,13 @@ export default function AddPost() {
                     </Popover>
                   </div>
 
-                  <Button onClick={handleAddPost}>Add Post</Button>
+                  <Button
+                    onClick={() => {
+                      checkVulgarity(newPost.description);
+                    }}
+                  >
+                    Add Post
+                  </Button>
                 </div>
               </div>
             </div>

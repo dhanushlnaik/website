@@ -7,7 +7,7 @@ import { useStateStore } from "@/store";
 import { getPosts } from "@/app/_action";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { CardDemo } from "../Events/EventCard";
+import EventCard from "../Events/EventCard";
 interface MapProps {
   lat: number;
   long: number;
@@ -61,22 +61,43 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
 
       {postsData.map((post, index) => {
         return (
-<Marker
-  key={index}
-  position={[post.latitude, post.longitude]}
-  icon={customIcon}
->
-  <Popup
-    className="bg-white bg-opacity-75 backdrop-blur-xs shadow-glass p-4 rounded-lg"
-    closeButton={false}
-  >
-
-    <div>
-  <CardDemo category={post.category} description={post.description} image={post.image} createdAt={post.createdAt} expectedCompletion={post.expectedCompletion} expiresAt={post.expiresAt} reports={post.reports} author={post.author}/>
-    </div>
-  </Popup>
-</Marker>
-
+          <Marker
+            key={index}
+            position={[post.latitude, post.longitude]}
+            icon={customIcon}
+          >
+            <Popup
+              className="bg-white bg-opacity-75 backdrop-blur-xs shadow-glass p-4 rounded-lg"
+              closeButton={false}
+            >
+              {/* <EventCard
+                category={post.category}
+                description={post.description}
+                image={post.image}
+                createdAt={post.createdAt}
+                expectedCompletion={post.expectedCompletion}
+                expiresAt={post.expiresAt}
+                reports={post.reports}
+                author={post.author}
+              /> */}
+              <div className="flex items-center space-x-4">
+                <div className="w-20 h-20 relative rounded-full overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt="post image"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold">{post.category}</h1>
+                  <p className="text-sm text-muted-foreground">
+                    {post.description}
+                  </p>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
         );
       })}
       <AddMarkerOnClick />
@@ -104,4 +125,3 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
 };
 
 export default Map;
-

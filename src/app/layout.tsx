@@ -23,7 +23,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Toaster />
-          <div className="absolute bottom-5 right-5 ">
+          <div className="sticky bottom-5 w-full justify-end flex pr-5">
             <AddPost />
           </div>
         </div>

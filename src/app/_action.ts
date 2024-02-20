@@ -41,3 +41,22 @@ export async function getPosts() {
   });
   return posts;
 }
+
+export async function checkVulgarity(sentence: string) {
+  let result = "";
+  fetch("http://127.0.0.1:5000/check_vulgarity", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sentence: sentence }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      result = data.result;
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}

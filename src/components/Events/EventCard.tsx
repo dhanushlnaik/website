@@ -1,7 +1,5 @@
-import { BellIcon, CheckIcon } from "@radix-ui/react-icons"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,46 +7,113 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
-
-
+} from "@/components/ui/card";
+import Image from "next/image";
 interface CardProps {
-    category:string,
-    description: string,
-    image: string,
-    createdAt: Date,
-    expectedCompletion: Date,
-    expiresAt: Date,
-    reports: number,
-    author: string
+  category: string;
+  description: string;
+  image: string;
+  createdAt: Date;
+  expectedCompletion: Date;
+  expiresAt: Date;
+  reports: number;
+  author: any;
+}
 
-} 
-
-export const CardDemo: React.FC<CardProps> = ({ category, description, image, createdAt, expectedCompletion, expiresAt, reports, author  }) => {
+const EventCard: React.FC<CardProps> = ({
+  category,
+  description,
+  image,
+  createdAt,
+  expectedCompletion,
+  expiresAt,
+  reports,
+  author,
+}) => {
   return (
-    <Card className={cn("w-[300px]")}>
+    <Card className="max-w-[30rem]">
       <CardHeader>
-        <CardTitle>{category.replace("_", " ")}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <div className="flex w-full justify-between items-center">
+          <span className="flex md:flex-row flex-col gap-2 items-center text-sm">
+            <Image
+              src={author.image}
+              alt={author.name}
+              width={200}
+              height={200}
+              className="w-8 h-8 rounded-full"
+            />
+            {author.name}
+          </span>
+          <Badge variant={"destructive"}>{category}</Badge>
+        </div>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className=" flex items-center space-x-4 rounded-md border p-4">
-          <div className="flex-1 space-y-1">
-            <p className="text-sm font-medium leading-none">
-                Expected Completion: 
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {author}
-            </p>
+      <CardContent className="flex flex-col gap-4">
+        <Image
+          src={image}
+          alt={category}
+          width={500}
+          height={200}
+          className="w-full h-full rounded-lg"
+        />
+        <span className="text-xl">{description}</span>
+      </CardContent>
+
+      <CardFooter>
+        <div className="flex justify-between w-full text-xs text-slate-400">
+          <div className="flex flex-col justify-center items-center">
+            <span className="font-bold text-center">Posted at</span>
+            <span>
+              {createdAt.getDate() < 10
+                ? "0" + createdAt.getDate()
+                : createdAt.getDate()}
+              -
+              {createdAt.getMonth() + 1 < 10
+                ? "0" + (createdAt.getMonth() + 1)
+                : createdAt.getMonth() + 1}
+              -{createdAt.getFullYear()}
+            </span>
+            <span>
+              {createdAt.getHours() < 10
+                ? "0" + createdAt.getHours()
+                : createdAt.getHours()}
+              :
+              {createdAt.getMinutes() < 10
+                ? "0" + createdAt.getMinutes()
+                : createdAt.getMinutes() < 10
+                ? "0" + createdAt.getMinutes()
+                : createdAt.getMinutes()}
+            </span>
+          </div>
+
+          <div className="flex flex-col justify-center items-center">
+            <span className="font-bold text-center">Ends at</span>
+            <span>
+              {expectedCompletion.getDate() < 10
+                ? "0" + expectedCompletion.getDate()
+                : expectedCompletion.getDate()}
+              -
+              {expectedCompletion.getMonth() + 1 < 10
+                ? "0" + (expectedCompletion.getMonth() + 1)
+                : expectedCompletion.getMonth() + 1}
+              -{expectedCompletion.getFullYear()}
+            </span>
+
+            <span>
+              {expectedCompletion.getHours() < 10
+                ? "0" + expectedCompletion.getHours()
+                : expectedCompletion.getHours()}
+              :
+              {expectedCompletion.getMinutes() < 10
+                ? "0" + expectedCompletion.getMinutes()
+                : expectedCompletion.getMinutes() < 10
+                ? "0" + expectedCompletion.getMinutes()
+                : expectedCompletion.getMinutes()}
+            </span>
           </div>
         </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full">
-          <CheckIcon className="mr-2 h-4 w-4" /> Expires At:{" "}
-        </Button>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
+
+export default EventCard;
