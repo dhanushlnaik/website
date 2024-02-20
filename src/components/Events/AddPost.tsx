@@ -58,7 +58,7 @@ export default function AddPost() {
   const handleUpload = (result: CldUploadWidgetResults) => {
     const info = result.info as object;
     if ("secure_url" in info && "public_id" in info) {
-      setUser({ ...newPost, image: info.secure_url });
+      setNewPost({ ...newPost, image: info.secure_url });
     }
   };
 
@@ -231,7 +231,7 @@ export default function AddPost() {
 
                   <Button
                     onClick={() => {
-                      checkVulgarity(newPost.description);
+                      handleAddPost();
                     }}
                   >
                     Add Post

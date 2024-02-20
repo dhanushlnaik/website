@@ -8,6 +8,7 @@ import { getPosts } from "@/app/_action";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import EventCard from "../Events/EventCard";
+import { Badge } from "../ui/badge";
 interface MapProps {
   lat: number;
   long: number;
@@ -68,32 +69,90 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
           >
             <Popup
               className="bg-white bg-opacity-75 backdrop-blur-xs shadow-glass p-4 rounded-lg"
-              closeButton={false}
+              closeButton={true}
             >
-              {/* <EventCard
-                category={post.category}
-                description={post.description}
-                image={post.image}
-                createdAt={post.createdAt}
-                expectedCompletion={post.expectedCompletion}
-                expiresAt={post.expiresAt}
-                reports={post.reports}
-                author={post.author}
-              /> */}
-              <div className="flex items-center space-x-4">
-                <div className="w-20 h-20 relative rounded-full overflow-hidden">
+              <div className="max-w-[15rem] h-[25rem] flex flex-col justify-between ">
+                <div className="space-y-4">
+                  <div className="flex w-full justify-between items-center">
+                    <span className="flex md:flex-row flex-col gap-2 items-center text-xs">
+                      <Image
+                        src={post.author.image}
+                        alt={post.author.name}
+                        width={200}
+                        height={200}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      {post.author.name}
+                    </span>
+                    <Badge variant={"destructive"}>
+                      {post.category.replaceAll("_", " ")}
+                    </Badge>
+                  </div>
                   <Image
                     src={post.image}
-                    alt="post image"
-                    layout="fill"
-                    objectFit="cover"
+                    alt={post.category}
+                    width={200}
+                    height={80}
+                    className="w-full h-3/4 rounded-lg"
                   />
                 </div>
+                <div className="flex flex-col gap-4">
+                  <span className="text-lg">{post.description}</span>
+                </div>
+
                 <div>
-                  <h1 className="text-lg font-bold">{post.category}</h1>
-                  <p className="text-sm text-muted-foreground">
-                    {post.description}
-                  </p>
+                  <div className="flex justify-between w-full text-xs text-slate-400">
+                    <div className="flex flex-col justify-center items-center">
+                      <span className="font-bold text-center">Posted at</span>
+                      <span>
+                        {post.createdAt.getDate() < 10
+                          ? "0" + post.createdAt.getDate()
+                          : post.createdAt.getDate()}
+                        -
+                        {post.createdAt.getMonth() + 1 < 10
+                          ? "0" + (post.createdAt.getMonth() + 1)
+                          : post.createdAt.getMonth() + 1}
+                        -{post.createdAt.getFullYear()}
+                      </span>
+                      <span>
+                        {post.createdAt.getHours() < 10
+                          ? "0" + post.createdAt.getHours()
+                          : post.createdAt.getHours()}
+                        :
+                        {post.createdAt.getMinutes() < 10
+                          ? "0" + post.createdAt.getMinutes()
+                          : post.createdAt.getMinutes() < 10
+                          ? "0" + post.createdAt.getMinutes()
+                          : post.createdAt.getMinutes()}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center">
+                      <span className="font-bold text-center">Ends at</span>
+                      <span>
+                        {post.expectedCompletion.getDate() < 10
+                          ? "0" + post.expectedCompletion.getDate()
+                          : post.expectedCompletion.getDate()}
+                        -
+                        {post.expectedCompletion.getMonth() + 1 < 10
+                          ? "0" + (post.expectedCompletion.getMonth() + 1)
+                          : post.expectedCompletion.getMonth() + 1}
+                        -{post.expectedCompletion.getFullYear()}
+                      </span>
+
+                      <span>
+                        {post.expectedCompletion.getHours() < 10
+                          ? "0" + post.expectedCompletion.getHours()
+                          : post.expectedCompletion.getHours()}
+                        :
+                        {post.expectedCompletion.getMinutes() < 10
+                          ? "0" + post.expectedCompletion.getMinutes()
+                          : post.expectedCompletion.getMinutes() < 10
+                          ? "0" + post.expectedCompletion.getMinutes()
+                          : post.expectedCompletion.getMinutes()}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Popup>

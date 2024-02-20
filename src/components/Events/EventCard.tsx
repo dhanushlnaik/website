@@ -31,8 +31,8 @@ const EventCard: React.FC<CardProps> = ({
   author,
 }) => {
   return (
-    <Card className="max-w-[30rem]">
-      <CardHeader>
+    <Card className="max-w-[30rem] h-[30rem] flex flex-col justify-between hover:scale-105 duration-300">
+      <CardHeader className="space-y-4">
         <div className="flex w-full justify-between items-center">
           <span className="flex md:flex-row flex-col gap-2 items-center text-sm">
             <Image
@@ -44,10 +44,8 @@ const EventCard: React.FC<CardProps> = ({
             />
             {author.name}
           </span>
-          <Badge variant={"destructive"}>{category}</Badge>
+          <Badge variant={"destructive"}>{category.replaceAll("_", " ")}</Badge>
         </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
         <Image
           src={image}
           alt={category}
@@ -55,6 +53,8 @@ const EventCard: React.FC<CardProps> = ({
           height={200}
           className="w-full h-full rounded-lg"
         />
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
         <span className="text-xl">{description}</span>
       </CardContent>
 
