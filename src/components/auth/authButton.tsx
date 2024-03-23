@@ -24,7 +24,9 @@ export default function AuthButton() {
   return (
     <>
       {!user ? (
-        <Button onClick={() => signIn("google")}>Sign in</Button>
+        <Button variant={"yellow"} onClick={() => signIn("google")}>
+          Sign in
+        </Button>
       ) : (
         <Popover>
           <PopoverTrigger>
@@ -38,9 +40,15 @@ export default function AuthButton() {
           </PopoverTrigger>
           <PopoverContent className="flex flex-col gap-y-2">
             <Link href="/profile">
-              <Button className="w-full">Profile</Button>
+              <Button variant={"yellow"} className="w-full">
+                Profile
+              </Button>
             </Link>
-            <Button onClick={() => signOut()} className="w-full">
+            <Button
+              variant={"yellow"}
+              onClick={() => signOut()}
+              className="w-full"
+            >
               Sign out
             </Button>
           </PopoverContent>

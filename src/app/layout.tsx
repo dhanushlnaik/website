@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/HeaderFooter/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import AddPost from "@/components/Events/AddPost";
-const inter = Inter({ subsets: ["latin"] });
+const pop = Poppins({ subsets: ["latin"], weight: ["600"] });
 
 export const metadata: Metadata = {
   title: "Savdhaan India",
@@ -18,8 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className=" min-h-screen ">
+      <body className={pop.className}>
+        <div className="min-h-screen ">
           <Navbar />
           {children}
           <Toaster />

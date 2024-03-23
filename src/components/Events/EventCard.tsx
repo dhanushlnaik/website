@@ -101,8 +101,8 @@ const EventCard: React.FC<CardProps> = ({
                 {createdAt.getMinutes() < 10
                   ? "0" + createdAt.getMinutes()
                   : createdAt.getMinutes() < 10
-                  ? "0" + createdAt.getMinutes()
-                  : createdAt.getMinutes()}
+                    ? "0" + createdAt.getMinutes()
+                    : createdAt.getMinutes()}
               </span>
             </div>
 
@@ -127,8 +127,8 @@ const EventCard: React.FC<CardProps> = ({
                 {expectedCompletion.getMinutes() < 10
                   ? "0" + expectedCompletion.getMinutes()
                   : expectedCompletion.getMinutes() < 10
-                  ? "0" + expectedCompletion.getMinutes()
-                  : expectedCompletion.getMinutes()}
+                    ? "0" + expectedCompletion.getMinutes()
+                    : expectedCompletion.getMinutes()}
               </span>
             </div>
           </div>

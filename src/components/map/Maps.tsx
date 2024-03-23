@@ -122,8 +122,8 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
                         {post.createdAt.getMinutes() < 10
                           ? "0" + post.createdAt.getMinutes()
                           : post.createdAt.getMinutes() < 10
-                          ? "0" + post.createdAt.getMinutes()
-                          : post.createdAt.getMinutes()}
+                            ? "0" + post.createdAt.getMinutes()
+                            : post.createdAt.getMinutes()}
                       </span>
                     </div>
 
@@ -148,8 +148,8 @@ const Map: React.FC<MapProps> = ({ lat, long }) => {
                         {post.expectedCompletion.getMinutes() < 10
                           ? "0" + post.expectedCompletion.getMinutes()
                           : post.expectedCompletion.getMinutes() < 10
-                          ? "0" + post.expectedCompletion.getMinutes()
-                          : post.expectedCompletion.getMinutes()}
+                            ? "0" + post.expectedCompletion.getMinutes()
+                            : post.expectedCompletion.getMinutes()}
                       </span>
                     </div>
                   </div>
