@@ -29,14 +29,15 @@ const EventPage = () => {
           {posts?.map((post, index) => {
             console.log(post.reports);
             if (
-              Date.now() > new Date(post.expiresAt).getTime() ||
-              post.reports.length > 5
+              Date.now() > new Date(post.expiresAt).getTime() 
             ) {
               return null;
             } else if (user?.reports) {
             } else {
+
               return (
                 <section key={index}>
+                  
                   <EventCard
                     id={post.id}
                     category={post.category}

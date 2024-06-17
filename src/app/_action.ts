@@ -2,6 +2,10 @@
 import prisma from "../../prisma/client";
 import { getCurrentUser } from "@/lib/session";
 
+import BadWordsNext from 'bad-words-next';
+const en = require('bad-words-next/data/en.json')
+const badwords = new BadWordsNext({ data: en })
+
 const user = getCurrentUser().then((res) => res);
 
 export async function updateProfile(user: any) {
@@ -44,20 +48,8 @@ export async function getPosts() {
 }
 
 export async function checkVulgarity(sentence: string) {
-  let result = await fetch("http://127.0.0.1:5000/check_vulgarity", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ sentence: sentence }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      return data.result;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  let result =  badwords.check(sentence);
+
   return result;
 }
 
